@@ -1,52 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page1</title>
     <style>
-        .btn-log {
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 20%;
-        }
-        .btn-log:hover {
-            background-color: rgb(255, 255, 0);
-            color: black;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
             margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
         }
 
-        #loginForm,
-        #dashboard {
+        #loginForm, #dashboard {
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            width: 300px;
+            width: 100%;
+            max-width: 400px;
+            height: auto;
             text-align: center;
+            transition: transform 0.3s ease;
         }
 
         h2 {
             margin-bottom: 20px;
         }
 
-        input[type="text"],
-        input[type="password"] {
+        input[type="text"], input[type="password"] {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
@@ -70,8 +63,10 @@
 
         #dashboard {
             display: none;
-            width: 90%;
+            width: 100%;
             max-width: 1200px;
+            height: 100vh;
+            overflow-y: auto;
         }
 
         .gallery {
@@ -82,16 +77,65 @@
         }
 
         .gallery img {
-            width: 150px;
+            width: 100%;
             height: 150px;
             object-fit: cover;
             border-radius: 30px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s;
+            cursor: pointer;
         }
 
         .gallery img:hover {
             transform: scale(1.05);
+        }
+
+        .btn-log {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 20%;
+            margin: 20px 0;
+        }
+
+        .btn-log:hover {
+            background-color: rgb(255, 255, 0);
+            color: black;
+        }
+
+        #fullScreenModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #fullScreenModal img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        #exitBtn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: blue;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
         }
 
         @media (max-width: 768px) {
@@ -107,59 +151,76 @@
         }
     </style>
 </head>
-
 <body>
 
-    <div id="loginForm">
-        <h2>Login</h2>
-        <input type="text" id="username" placeholder="Username" required>
-        <input type="password" id="password" placeholder="Password" required>
-        <button onclick="login()">Login</button>
+<div id="loginForm">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Username" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button onclick="login()">Login</button>
+</div>
+
+<div id="dashboard">
+    <h2>Image Gallery Dashboard</h2>
+    <div class="gallery" id="gallery">
+        <!-- Add images dynamically or statically -->
+        <img src="PROJECT/IMRAN.webp" alt="Image 1" onclick="openFullScreen(this)">
+        <img src="grading.PNG" alt="Image 2" onclick="openFullScreen(this)">
+        <img src="PROJECT/IMRAN.webp" alt="Image 1" onclick="openFullScreen(this)">
+        <img src="grading.PNG" alt="Image 2" onclick="openFullScreen(this)">
+        <img src="PROJECT/IMRAN.webp" alt="Image 1" onclick="openFullScreen(this)">
+        <img src="grading.PNG" alt="Image 2" onclick="openFullScreen(this)">
+        <img src="PROJECT/IMRAN.webp" alt="Image 1" onclick="openFullScreen(this)">
+        <img src="grading.PNG" alt="Image 2" onclick="openFullScreen(this)">
+        
+        <img src="https://via.placeholder.com/150" alt="Image 3" onclick="openFullScreen(this)">
+        <img src="https://via.placeholder.com/150" alt="Image 4" onclick="openFullScreen(this)">
     </div>
+    <button class="btn-log" onclick="logout()">Logout</button>
+</div>
 
-    <div id="dashboard">
-        <h2>Image Gallery Dashboard</h2>
-        <div class="gallery" id="gallery">
-            <!-- Add images dynamically or statically -->
-            <img src="" alt="Image 1">
-            <img src="IMRAN.webp" alt="Image 1">
-            <img src="PROJECT/grading.PNG" alt="Image 1">
-            <img src="PROJECT/grading.PNG" alt="Image 1">
-            <img src="PROJECT/grading.PNG" alt="Image 1">
-            <img src="PROJECT/grading.PNG" alt="Image 1">
-            <img src="PROJECT/grading.PNG" alt="Image 1">
+<!-- Fullscreen Modal -->
+<div id="fullScreenModal">
+    <button id="exitBtn" onclick="closeFullScreen()">X</button>
+    <img id="fullScreenImage" src="" alt="Full Screen Image">
+</div>
 
-            <img src="https://via.placeholder.com/150" alt="Image 3">
-            <img src="https://via.placeholder.com/150" alt="Image 4">
-            <!-- Repeat this block for more images or use a loop in JavaScript -->
-        </div>
-        <button class="btn-log" onclick="logout()">Logout</button>
-    </div>
+<script>
+function login() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
 
-    <script>
-        function login() {
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
+    if (username === "admin" && password === "admin") {
+        document.getElementById("loginForm").style.display = "none";
+        document.getElementById("dashboard").style.display = "block";
+    } else {
+        alert("Invalid username or password");
+        document.getElementById("username").value = "";
+        document.getElementById("password").value = "";
+        document.getElementById("username").focus();
+    }
+}
 
-            if (username === "admin" && password === "admin") {
-                document.getElementById("loginForm").style.display = "none";
-                document.getElementById("dashboard").style.display = "block";
-            } else {
-                alert("Invalid username or password");
-                document.getElementById("username").value = "";
-                document.getElementById("password").value = "";
-                document.getElementById("username").focus();
-            }
-        }
+function logout() {
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("loginForm").style.display = "block";
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
+}
 
-        function logout() {
-            document.getElementById("dashboard").style.display = "none";
-            document.getElementById("loginForm").style.display = "block";
-            document.getElementById("username").value = "";
-            document.getElementById("password").value = "";
-        }
-    </script>
+function openFullScreen(imageElement) {
+    const modal = document.getElementById("fullScreenModal");
+    const fullScreenImage = document.getElementById("fullScreenImage");
+
+    fullScreenImage.src = imageElement.src;
+    modal.style.display = "flex";
+}
+
+function closeFullScreen() {
+    const modal = document.getElementById("fullScreenModal");
+    modal.style.display = "none";
+}
+</script>
 
 </body>
-
 </html>
