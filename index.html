@@ -1,10 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page1</title>
     <style>
+        .btn-log {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 20%;
+        }
+        .btn-log:hover {
+            background-color: rgb(255, 255, 0);
+            color: black;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -15,7 +30,9 @@
             height: 100vh;
             margin: 0;
         }
-        #loginForm, #dashboard {
+
+        #loginForm,
+        #dashboard {
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -23,16 +40,20 @@
             width: 300px;
             text-align: center;
         }
+
         h2 {
             margin-bottom: 20px;
         }
-        input[type="text"], input[type="password"] {
+
+        input[type="text"],
+        input[type="password"] {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+
         button {
             background-color: #007BFF;
             color: white;
@@ -42,75 +63,103 @@
             cursor: pointer;
             width: 100%;
         }
+
         button:hover {
-            background-color: #0056b3; /* Darker blue on hover */
+            background-color: #0056b3;
         }
+
         #dashboard {
-            display: none; /* Initially hidden */
+            display: none;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .gallery img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 10px;
+            }
+
+            .gallery img {
+                width: 100px;
+                height: 100px;
+            }
         }
     </style>
 </head>
+
 <body>
-<!-- LOGIN PAGE -->
- 
+
     <div id="loginForm">
         <h2>Login</h2>
         <input type="text" id="username" placeholder="Username" required>
         <input type="password" id="password" placeholder="Password" required>
         <button onclick="login()">Login</button>
     </div>
-<!-- DASHBOARD PAGE  -->
-<div id="dashboard">
-    <h2>Image Gallery Dashboard</h2>
-    <div class="gallery">
-        <!-- Add your images here -->
-        <img src="grading.PNG" alt="Image 1">
-        <img src="grading.PNG" alt="Image 2">
-        <img src="https://via.placeholder.com/150" alt="Image 3">
-        <img src="https://via.placeholder.com/150" alt="Image 4">
-        <img src="https://via.placeholder.com/150" alt="Image 5">
-        <img src="https://via.placeholder.com/150" alt="Image 6">
-        <img src="https://via.placeholder.com/150" alt="Image 7">
-        <img src="https://via.placeholder.com/150" alt="Image 8">
-        <img src="https://via.placeholder.com/150" alt="Image 9">
-        <img src="https://via.placeholder.com/150" alt="Image 10">
-        <img src="https://via.placeholder.com/150" alt="Image 11">
-        <img src="https://via.placeholder.com/150" alt="Image 12">
-        <img src="https://via.placeholder.com/150" alt="Image 13">
-        <img src="https://via.placeholder.com/150" alt="Image 14">
-        <img src="https://via.placeholder.com/150" alt="Image 15">
-        <img src="https://via.placeholder.com/150" alt="Image 16">
-        <img src="https://via.placeholder.com/150" alt="Image 17">
-        <img src="https://via.placeholder.com/150" alt="Image 18">
-        <img src="https://via.placeholder.com/150" alt="Image 19">
-        <img src="https://via.placeholder.com/150" alt="Image 20">
+
+    <div id="dashboard">
+        <h2>Image Gallery Dashboard</h2>
+        <div class="gallery" id="gallery">
+            <!-- Add images dynamically or statically -->
+            <img src="" alt="Image 1">
+            <img src="IMRAN.webp" alt="Image 1">
+            <img src="PROJECT/grading.PNG" alt="Image 1">
+            <img src="PROJECT/grading.PNG" alt="Image 1">
+            <img src="PROJECT/grading.PNG" alt="Image 1">
+            <img src="PROJECT/grading.PNG" alt="Image 1">
+            <img src="PROJECT/grading.PNG" alt="Image 1">
+
+            <img src="https://via.placeholder.com/150" alt="Image 3">
+            <img src="https://via.placeholder.com/150" alt="Image 4">
+            <!-- Repeat this block for more images or use a loop in JavaScript -->
+        </div>
+        <button class="btn-log" onclick="logout()">Logout</button>
     </div>
 
-<script>
-    
-function login() {
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+    <script>
+        function login() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
 
-    // Check credentials
-    if (username === "admin" && password === "admin") {
-        document.getElementById("loginForm").style.display = "none"; // Hide login form
-        document.getElementById("dashboard").style.display = "block"; // Show dashboard
-    } else {
-        alert("Invalid username or password");
-        document.getElementById("username").value = ""; // Clear username
-        document.getElementById("password").value = ""; // Clear password
-        document.getElementById("username").focus(); // Focus on username input
-    }
-}
+            if (username === "admin" && password === "admin") {
+                document.getElementById("loginForm").style.display = "none";
+                document.getElementById("dashboard").style.display = "block";
+            } else {
+                alert("Invalid username or password");
+                document.getElementById("username").value = "";
+                document.getElementById("password").value = "";
+                document.getElementById("username").focus();
+            }
+        }
 
-function logout() {
-    document.getElementById("dashboard").style.display = "none"; // Hide dashboard
-    document.getElementById("loginForm").style.display = "block"; // Show login form again
-    document.getElementById("username").value = ""; // Clear username
-    document.getElementById("password").value = ""; // Clear password
-}
-</script>
+        function logout() {
+            document.getElementById("dashboard").style.display = "none";
+            document.getElementById("loginForm").style.display = "block";
+            document.getElementById("username").value = "";
+            document.getElementById("password").value = "";
+        }
+    </script>
 
 </body>
+
 </html>
